@@ -23,11 +23,25 @@ dados <- read.csv('dados/temperatura.csv') %>% #Leitura do arquivo .csv
 
 
 ggplot(dados,aes(x=data,y=t.ar)) + #Definindo dados e valores dos eixos
-  geom_line(aes(col="Temperatura",lty="Temperatura"),lwd=0.7)
+  geom_line(aes(col="Temperature",lty="Temperature"),lwd=0.7) +
+  geom_line(aes(y=moving.average15, col="Moving Average 15 days",
+                lty="Moving Average 15 days"), lwd=0.7)+ #Média movel
+  scale_color_manual(values=c("#FF0000","#000080"))+
+  scale_linetype_manual(values=c('longdash','solid'))+ #Longdash= linha tracejada e solid=linha solida
+  labs(x=NULL,y='Air temperature (ºC)', #Titulos dos eixos
+       col=NULL,
+       linetype=NULL)+
+  theme_minimal()+
+  theme(legend.position ='top')
 
-  
+##############################################
+##       Salvando os dados                ####
+##############################################
 
-
+ggsave(filename= 'figs/moving_average.png',
+       width= 9.76,
+       height= 6.57,
+       scale= 0.87)
 
 
 
